@@ -31,7 +31,7 @@ zlog_record_t *zlog_record_new(const char *name, zlog_record_fn output)
 	zc_assert(name, NULL);
 	zc_assert(output, NULL);
 
-	a_record = calloc(1, sizeof(zlog_record_t));
+	a_record = (zlog_record_t *)calloc(1, sizeof(zlog_record_t));
 	if (!a_record) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

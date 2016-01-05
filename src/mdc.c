@@ -22,7 +22,7 @@ void zlog_mdc_profile(zlog_mdc_t *a_mdc, int flag)
 	zc_profile(flag, "---mdc[%p]---", a_mdc);
 
 	zc_hashtable_foreach(a_mdc->tab, a_entry) {
-		a_mdc_kv = a_entry->value;
+		a_mdc_kv = (zlog_mdc_kv_t *)a_entry->value;
 		zc_profile(flag, "----mdc_kv[%p][%s]-[%s]----",
 				a_mdc_kv,
 				a_mdc_kv->key, a_mdc_kv->value);
@@ -49,7 +49,7 @@ static zlog_mdc_kv_t *zlog_mdc_kv_new(const char *key, const char *value)
 {
 	zlog_mdc_kv_t *a_mdc_kv;
 
-	a_mdc_kv = calloc(1, sizeof(zlog_mdc_kv_t));
+	a_mdc_kv = (zlog_mdc_kv_t *)calloc(1, sizeof(zlog_mdc_kv_t));
 	if (!a_mdc_kv) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -64,7 +64,7 @@ zlog_mdc_t *zlog_mdc_new(void)
 {
 	zlog_mdc_t *a_mdc;
 
-	a_mdc = calloc(1, sizeof(zlog_mdc_t));
+	a_mdc = (zlog_mdc_t *)calloc(1, sizeof(zlog_mdc_t));
 	if (!a_mdc) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -116,7 +116,7 @@ char *zlog_mdc_get(zlog_mdc_t * a_mdc, const char *key)
 {
 	zlog_mdc_kv_t *a_mdc_kv;
 
-	a_mdc_kv = zc_hashtable_get(a_mdc->tab, key);
+	a_mdc_kv = (zlog_mdc_kv_t *)zc_hashtable_get(a_mdc->tab, key);
 	if (!a_mdc_kv) {
 		zc_error("zc_hashtable_get fail");
 		return NULL;
@@ -129,7 +129,7 @@ zlog_mdc_kv_t *zlog_mdc_get_kv(zlog_mdc_t * a_mdc, const char *key)
 {
 	zlog_mdc_kv_t *a_mdc_kv;
 
-	a_mdc_kv = zc_hashtable_get(a_mdc->tab, key);
+	a_mdc_kv = (zlog_mdc_kv_t *)zc_hashtable_get(a_mdc->tab, key);
 	if (!a_mdc_kv) {
 		zc_error("zc_hashtable_get fail");
 		return NULL;

@@ -124,7 +124,7 @@ zlog_category_t *zlog_category_new(const char *name, zc_arraylist_t * rules)
 		zc_error("name[%s] too long", name);
 		return NULL;
 	}
-	a_category = calloc(1, sizeof(zlog_category_t));
+	a_category = (zlog_category_t *)calloc(1, sizeof(zlog_category_t));
 	if (!a_category) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

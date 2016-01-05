@@ -51,13 +51,13 @@ zlog_event_t *zlog_event_new(int time_cache_count)
 {
 	zlog_event_t *a_event;
 
-	a_event = calloc(1, sizeof(zlog_event_t));
+	a_event = (zlog_event_t *)calloc(1, sizeof(zlog_event_t));
 	if (!a_event) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
 	}
 
-	a_event->time_caches = calloc(time_cache_count, sizeof(zlog_time_cache_t));
+	a_event->time_caches = (zlog_time_cache_t *)calloc(time_cache_count, sizeof(zlog_time_cache_t));
 	if (!a_event->time_caches) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

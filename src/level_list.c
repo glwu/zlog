@@ -110,14 +110,14 @@ zlog_level_t *zlog_level_list_get(zc_arraylist_t *levels, int l)
 	}
 #endif
 
-	a_level = zc_arraylist_get(levels, l);
+	a_level = (zlog_level_t *)zc_arraylist_get(levels, l);
 	if (a_level) {
 		return a_level;
 	} else {
 		/* empty slot */
 		zc_error("l[%d] not in (0,254), or has no level defined,"
 			"see configure file define, set to UNKOWN", l);
-		return zc_arraylist_get(levels, 254);
+		return (zlog_level_t *)zc_arraylist_get(levels, 254);
 	}
 }
 

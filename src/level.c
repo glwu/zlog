@@ -96,7 +96,7 @@ zlog_level_t *zlog_level_new(char *line)
 		return NULL;
 	}
 
-	a_level = calloc(1, sizeof(zlog_level_t));
+	a_level = (zlog_level_t *)calloc(1, sizeof(zlog_level_t));
 	if (!a_level) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

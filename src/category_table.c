@@ -105,7 +105,7 @@ zlog_category_t *zlog_category_table_fetch_category(zc_hashtable_t * categories,
 	zc_assert(categories, NULL);
 
 	/* 1st find category in global category map */
-	a_category = zc_hashtable_get(categories, category_name);
+	a_category = (zlog_category_t *)zc_hashtable_get(categories, category_name);
 	if (a_category) return a_category;
 
 	/* else not fount, create one */

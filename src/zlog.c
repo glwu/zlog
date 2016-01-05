@@ -21,6 +21,7 @@
 #include "zc_defs.h"
 #include "rule.h"
 #include "version.h"
+#include "zlog.h"
 
 /*******************************************************************************/
 extern char *zlog_git_sha1;
@@ -58,7 +59,7 @@ static void zlog_fini_inner(void)
 static void zlog_clean_rest_thread(void)
 {
 	zlog_thread_t *a_thread;
-	a_thread = pthread_getspecific(zlog_thread_key);
+	a_thread = (zlog_thread_t *)pthread_getspecific(zlog_thread_key);
 	if (!a_thread) return;
 	zlog_thread_del(a_thread);
 	return;
@@ -416,9 +417,9 @@ err:
 /*******************************************************************************/
 #define zlog_fetch_thread(a_thread, fail_goto) do {  \
 	int rd = 0;  \
-	a_thread = pthread_getspecific(zlog_thread_key);  \
+	a_thread = (typeof(a_thread))pthread_getspecific(zlog_thread_key);  \
 	if (!a_thread) {  \
-		a_thread = zlog_thread_new(zlog_env_init_version,  \
+		a_thread = (typeof(a_thread))zlog_thread_new(zlog_env_init_version,  \
 				zlog_env_conf->buf_size_min, zlog_env_conf->buf_size_max, \
 				zlog_env_conf->time_cache_count); \
 		if (!a_thread) {  \
@@ -514,7 +515,7 @@ char *zlog_get_mdc(char *key)
 		goto err;
 	}
 
-	a_thread = pthread_getspecific(zlog_thread_key);
+	a_thread = (zlog_thread_t *)pthread_getspecific(zlog_thread_key);
 	if (!a_thread) {
 		zc_error("thread not found, maybe not use zlog_put_mdc before");
 		goto err;
@@ -559,7 +560,7 @@ void zlog_remove_mdc(char *key)
 		goto exit;
 	}
 
-	a_thread = pthread_getspecific(zlog_thread_key);
+	a_thread = (zlog_thread_t *)pthread_getspecific(zlog_thread_key);
 	if (!a_thread) {
 		zc_error("thread not found, maybe not use zlog_put_mdc before");
 		goto exit;
@@ -592,7 +593,7 @@ void zlog_clean_mdc(void)
 		goto exit;
 	}
 
-	a_thread = pthread_getspecific(zlog_thread_key);
+	a_thread =(zlog_thread_t *) pthread_getspecific(zlog_thread_key);
 	if (!a_thread) {
 		zc_error("thread not found, maybe not use zlog_put_mdc before");
 		goto exit;

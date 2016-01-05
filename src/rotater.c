@@ -85,7 +85,7 @@ zlog_rotater_t *zlog_rotater_new(char *lock_file)
 
 	zc_assert(lock_file, NULL);
 
-	a_rotater = calloc(1, sizeof(zlog_rotater_t));
+	a_rotater = (zlog_rotater_t *)calloc(1, sizeof(zlog_rotater_t));
 	if (!a_rotater) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -144,7 +144,7 @@ static zlog_file_t *zlog_file_check_new(zlog_rotater_t * a_rotater, const char *
 		return NULL;
 	}
 
-	a_file = calloc(1, sizeof(zlog_file_t));
+	a_file = (zlog_file_t *)calloc(1, sizeof(zlog_file_t));
 	if (!a_file) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -251,7 +251,7 @@ static int zlog_rotater_seq_files(zlog_rotater_t * a_rotater)
 	}
 
 	if (zc_arraylist_len(a_rotater->files) > 0) { /* list is not empty */
-		a_file = zc_arraylist_get(a_rotater->files, zc_arraylist_len(a_rotater->files)-1);
+		a_file = (zlog_file_t *)zc_arraylist_get(a_rotater->files, zc_arraylist_len(a_rotater->files)-1);
 		if (!a_file) {
 			zc_error("zc_arraylist_get fail");
 			return -1;
@@ -292,7 +292,7 @@ static int zlog_rotater_roll_files(zlog_rotater_t * a_rotater)
 
 	/* now in the list, aa.0 aa.1 aa.2 aa.02... */
 	for (i = zc_arraylist_len(a_rotater->files) - 1; i > -1; i--) {
-		a_file = zc_arraylist_get(a_rotater->files, i);
+		a_file = (zlog_file_t *)zc_arraylist_get(a_rotater->files, i);
 		if (!a_file) {
 			zc_error("zc_arraylist_get fail");
 			return -1;

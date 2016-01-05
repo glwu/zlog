@@ -33,13 +33,13 @@ zc_hashtable_t *zc_hashtable_new(size_t a_size,
 {
 	zc_hashtable_t *a_table;
 
-	a_table = calloc(1, sizeof(*a_table));
+	a_table = (zc_hashtable_t *)calloc(1, sizeof(*a_table));
 	if (!a_table) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
 	}
 
-	a_table->tab = calloc(a_size, sizeof(*(a_table->tab)));
+	a_table->tab = (zc_hashtable_entry_t **)calloc(a_size, sizeof(*(a_table->tab)));
 	if (!a_table->tab) {
 		zc_error("calloc fail, errno[%d]", errno);
 		free(a_table);
@@ -121,7 +121,7 @@ static int zc_hashtable_rehash(zc_hashtable_t * a_table)
 	zc_hashtable_entry_t *q;
 
 	tab_size = 2 * a_table->tab_size;
-	tab = calloc(tab_size, sizeof(*tab));
+	tab = (zc_hashtable_entry_t **)calloc(tab_size, sizeof(*tab));
 	if (!tab) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return -1;
@@ -207,7 +207,7 @@ int zc_hashtable_put(zc_hashtable_t * a_table, void *a_key, void *a_value)
 			}
 		}
 
-		p = calloc(1, sizeof(*p));
+		p = (zc_hashtable_entry_t *)calloc(1, sizeof(*p));
 		if (!p) {
 			zc_error("calloc fail, errno[%d]", errno);
 			return -1;

@@ -64,7 +64,7 @@ zlog_format_t *zlog_format_new(char *line, int * time_cache_count)
 
 	zc_assert(line, NULL);
 
-	a_format = calloc(1, sizeof(zlog_format_t));
+	a_format = (zlog_format_t *)calloc(1, sizeof(zlog_format_t));
 	if (!a_format) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

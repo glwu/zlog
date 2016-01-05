@@ -600,7 +600,7 @@ zlog_rule_t *zlog_rule_new(char *line,
 	zc_assert(default_format, NULL);
 	zc_assert(formats, NULL);
 
-	a_rule = calloc(1, sizeof(zlog_rule_t));
+	a_rule = (zlog_rule_t *)calloc(1, sizeof(zlog_rule_t));
 	if (!a_rule) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -1054,7 +1054,7 @@ int zlog_rule_set_record(zlog_rule_t * a_rule, zc_hashtable_t *records)
 		return 0; /* fliter, may go through not record rule */
 	}
 
-	a_record = zc_hashtable_get(records, a_rule->record_name);
+	a_record = (zlog_record_t *)zc_hashtable_get(records, a_rule->record_name);
 	if (a_record) {
 		a_rule->record_func = a_record->output;
 	}

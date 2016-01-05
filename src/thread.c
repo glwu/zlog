@@ -65,7 +65,7 @@ zlog_thread_t *zlog_thread_new(int init_version, size_t buf_size_min, size_t buf
 {
 	zlog_thread_t *a_thread;
 
-	a_thread = calloc(1, sizeof(zlog_thread_t));
+	a_thread = (zlog_thread_t *)calloc(1, sizeof(zlog_thread_t));
 	if (!a_thread) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

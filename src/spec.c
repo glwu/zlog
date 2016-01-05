@@ -148,7 +148,7 @@ static int zlog_spec_write_srcfile(zlog_spec_t * a_spec, zlog_thread_t * a_threa
 
 static int zlog_spec_write_srcfile_neat(zlog_spec_t * a_spec, zlog_thread_t * a_thread, zlog_buf_t * a_buf)
 {
-	char *p;
+	const char *p;
 
 	if ((p = strrchr(a_thread->event->file, '/')) != NULL) {
 		return zlog_buf_append(a_buf, p + 1,
@@ -465,7 +465,7 @@ zlog_spec_t *zlog_spec_new(char *pattern_start, char **pattern_next, int *time_c
 	zc_assert(pattern_start, NULL);
 	zc_assert(pattern_next, NULL);
 
-	a_spec = calloc(1, sizeof(zlog_spec_t));
+	a_spec = (zlog_spec_t *)calloc(1, sizeof(zlog_spec_t));
 	if (!a_spec) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
